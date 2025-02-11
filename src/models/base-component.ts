@@ -1,8 +1,6 @@
 export class BaseComponent {
-  protected mediator: Mediator;
-  constructor(mediator?: Mediator) {
-    this.mediator = mediator!;
-  }
+  protected mediator?: Mediator;
+
   public setMediator(mediator: Mediator): void {
     this.mediator = mediator;
   }

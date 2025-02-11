@@ -1,25 +1,29 @@
-import { User1 } from "../models/user1";
-import { User2 } from "../models/user2";
+import { User } from "../models/user";
+import { MessageTypes } from "../consts/message-types";
 
 export class ChatMediator implements Mediator {
-  private user1: User1;
-  private user2: User2;
+  private users: User[] = [];
 
-  constructor(u1: User1, u2: User2) {
-    this.user1 = u1;
-    this.user1.setMediator(this);
-    this.user2 = u2;
-    this.user2.setMediator(this);
+  public connect(user: User) {
+    this.users.push(user);
+    user.setMediator(this);
   }
 
-  public notify(sender: object, event: string, message?: string): void {
-    if (event === `sendMessage`) {
-      if (sender === this.user1) {
-        console.log("We are passing a message from user 1 to user 2");
-        this.user2.receiveMessage(message!);
-      } else if (sender === this.user2) {
-        console.log("We are passing a message from user 2 to user 1");
-        this.user1.receiveMessage(message!);
+  public notify(sender: User, event: string, message: string): void {
+    switch (event) {
+      case MessageTypes.sendMessage: {
+        const otherUsers = this.users.filter((u) => u.id !== sender.id);
+        for (const otherUser of otherUsers) {
+          otherUser.receiveMessage(message);
+        }
+        break;
+      }
+      case MessageTypes.setOffline: {
+        const otherUsers = this.users.filter((u) => u.id !== sender.id);
+        for (const otherUser of otherUsers) {
+          otherUser.setOffline(message);
+        }
+        break;
       }
     }
   }
