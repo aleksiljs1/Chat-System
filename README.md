@@ -1,6 +1,5 @@
 # Overview
-This Application demonstrates a simple chat system implemented using the **Mediator Design Pattern** in TypeScript. The mediator controls the communication between users  
-and manages their status(online/offline). Users can send messages to each other through the mediator.
+This Application demonstrates a simple chat system implemented using the **Mediator Design Pattern** in TypeScript. The mediator controls the communication between users  and manages their status(online/offline). Users can send messages to each other through the mediator.
 ### Technologies used
 *Typescript*  and *Node JS*
 ### Usage
